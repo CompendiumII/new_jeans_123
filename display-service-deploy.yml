@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: display-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: display-service
+  template:
+    metadata:
+      labels:
+        app: display-service
+    spec:
+      containers:
+      - name: display-service
+        image: bennycao06/display_service:latest
+        ports:
+        - containerPort: 5006

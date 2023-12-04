@@ -1,0 +1,164 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: analytics-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: analytics-service
+  template:
+    metadata:
+      labels:
+        app: analytics-service
+    spec:
+      containers:
+      - name: analytics-service
+        image: bennycao06/analytics_service:latest
+        env:
+        - name: MYSQL_HOST
+          value: mysql
+        - name: MYSQL_USER
+          value: user1
+        - name: MYSQL_PASSWORD
+          value: password1
+        ports:
+        - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-service
+  template:
+    metadata:
+      labels:
+        app: auth-service
+    spec:
+      containers:
+      - name: auth-service
+        image: bennycao06/auth_service:latest
+        ports:
+        - containerPort: 5000
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: display-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: display-service
+  template:
+    metadata:
+      labels:
+        app: display-service
+    spec:
+      containers:
+      - name: display-service
+        image: bennycao06/display_service:latest
+        ports:
+        - containerPort: 5006
+	resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: login-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: login-service
+  template:
+    metadata:
+      labels:
+        app: login-service
+    spec:
+      containers:
+      - name: login-service
+        image: bennycao06/login_servicesss:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5001
+        env:
+        - name: MYSQL_HOST
+          value: mysql
+        - name: MYSQL_USER
+          value: user1
+        - name: MYSQL_PASSWORD
+          value: password1
+        - name: MYSQL_DATABASE
+          value: analytics_data
+	resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-service
+  template:
+    metadata:
+      labels:
+        app: mongo-service
+    spec:
+      containers:
+      - name: mongo-service
+        image: bennycao06/mongo_service:latest
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          value: admin
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          value: adminpassword
+        ports:
+        - containerPort: 27017
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: bennycao06/mysql_db:latest
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: password
+        - name: MYSQL_DATABASE
+          value: analytics_data
+        - name: MYSQL_USER
+          value: user1
+        - name: MYSQL_PASSWORD
+          value: password1
+        ports:
+        - containerPort: 3306

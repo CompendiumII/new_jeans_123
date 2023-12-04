@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: login-service-deployment
+  labels:
+    app: login-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: login-service
+  template:
+    metadata:
+      labels:
+        app: login-service
+    spec:
+      containers:
+      - name: login-service
+        image: bennycao06/login_service
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5001
