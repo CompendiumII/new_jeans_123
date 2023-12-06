@@ -62,6 +62,7 @@ spec:
     metadata:
       labels:
         app: display-service
+        service-group: multi-group
     spec:
       containers:
       - name: display-service
@@ -91,6 +92,7 @@ spec:
     metadata:
       labels:
         app: login-service
+        service-group: multi-group
     spec:
       containers:
       - name: login-service

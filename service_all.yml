@@ -1,28 +1,20 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: display-service
+  name: multi-service-lb
 spec:
+  type: LoadBalancer
   selector:
-    app: display-service
+    service-group: multi-group
   ports:
-    - protocol: TCP
-      port:   5006    # External port
-      targetPort: 5006   # Container port
-  type: LoadBalancer   # Exposes the service on each Node's IP at a static port
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: login-service
-spec:
-  type: LoadBalancer   # Exposes the service on each Node's IP at a static port
-  ports:
-    - protocol: TCP
-      port: 5001   # External port
-      targetPort: 5001   # Container port
-  selector:
-    app: login-service
+    - name: display-service
+      protocol: TCP
+      port: 5006
+      targetPort: 5006
+    - name: login-service
+      protocol: TCP
+      port: 5001
+      targetPort: 5001
 ---
 apiVersion: v1
 kind: Service
@@ -36,6 +28,7 @@ spec:
   - port: 5000
     targetPort: 5000
     nodePort: 30001
+
 ---
 apiVersion: v1
 kind: Service
@@ -49,6 +42,7 @@ spec:
   - port: 80
     targetPort: 80
     nodePort: 30008
+
 ---
 apiVersion: v1
 kind: Service
@@ -63,6 +57,7 @@ spec:
     targetPort: 3306
     nodePort: 30006
 ---
+
 apiVersion: v1
 kind: Service
 metadata:
