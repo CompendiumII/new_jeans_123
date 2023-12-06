@@ -8,10 +8,10 @@ spec:
     kind: Deployment
     name: login-service-deployment
   minReplicas: 1
-  maxReplicas: 5
+  maxReplicas: 10
   behavior:
     scaleDown:
-      stabilizationWindowSeconds: 30
+      stabilizationWindowSeconds: 20
       policies:
       - type: Percent
         value: 10
@@ -24,7 +24,7 @@ spec:
         periodSeconds: 10
       - type: Pods
         value: 4
-        periodSeconds: 15
+        periodSeconds: 10
       selectPolicy: Max
   metrics:
   - type: Resource
@@ -32,13 +32,13 @@ spec:
       name: cpu
       target:
         type: Utilization
-        averageUtilization: 75
+        averageUtilization: 90
   - type: Resource
     resource:
       name: memory
       target:
         type: Utilization
-        averageUtilization: 45
+        averageUtilization: 55
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
@@ -50,14 +50,14 @@ spec:
     kind: Deployment
     name: display-service-deployment
   minReplicas: 1
-  maxReplicas: 5
+  maxReplicas: 10
   behavior:
     scaleDown:
-      stabilizationWindowSeconds: 30
+      stabilizationWindowSeconds: 20
       policies:
       - type: Percent
         value: 10
-        periodSeconds: 10
+        periodSeconds: 1-
     scaleUp:
       stabilizationWindowSeconds: 0
       policies:
@@ -74,11 +74,11 @@ spec:
       name: cpu
       target:
         type: Utilization
-        averageUtilization: 75
+        averageUtilization: 90
   - type: Resource
     resource:
       name: memory
       target:
         type: Utilization
-        averageUtilization: 45
+        averageUtilization: 55
 
