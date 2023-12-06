@@ -32,13 +32,13 @@ spec:
       name: cpu
       target:
         type: Utilization
-        averageUtilization: 90
+        averageUtilization: 40
   - type: Resource
     resource:
       name: memory
       target:
         type: Utilization
-        averageUtilization: 55
+        averageUtilization: 20
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
@@ -74,11 +74,11 @@ spec:
       name: cpu
       target:
         type: Utilization
-        averageUtilization: 90
+        averageUtilization: 40
   - type: Resource
     resource:
       name: memory
       target:
         type: Utilization
-        averageUtilization: 55
+        averageUtilization: 20
 
