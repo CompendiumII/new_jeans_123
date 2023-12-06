@@ -57,7 +57,7 @@ spec:
       policies:
       - type: Percent
         value: 10
-        periodSeconds: 1-
+        periodSeconds: 10
     scaleUp:
       stabilizationWindowSeconds: 0
       policies:
