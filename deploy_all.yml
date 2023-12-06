@@ -96,7 +96,7 @@ spec:
     spec:
       containers:
       - name: login-service
-        image: bennycao06/login_service:latest
+        image: bennycao06/logins_services:latest
         ports:
         - containerPort: 5001
         env:
